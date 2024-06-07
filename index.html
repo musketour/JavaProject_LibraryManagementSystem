@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #item-details-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+        <h1>MICKEY MOUSE</h1> 
+        <h2>CLUBHOUSE</h2>
+    </div>
+    <img src="https://www.disneyclips.com/images/images/mickey-mouse47.png" width="80px" alt="MICKEY MOUSE IMG" class="mickey-image">
+    </header>
+    <main>
+        <section id="homepage">
+            <h3>Library Management System</h3>
+            <ul id="item-list">
+            </ul>
+        </section>
+        <section id="checkout-form">
+            <h4>Checkout/Checkin Form</h4>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="action">Action:</label>
+                    <select id="action" name="action">
+                        <option value="checkout">Check Out</option>
+                        <option value="checkin">Check In</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="item">Item Type:</label>
+                    <select id="item" name="item">
+                        <option value="book">Book</option>
+                        <option value="journal">Journal</option>
+                        <option value="movie">Movie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="patron">Name:</label>
+                    <input type="text" id="patron" name="patron" required>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+        <section id="item-details">
+            <h4>Item Details</h4>
+            <form id="item-details-form">
+                <div class="form-group">
+                    <label for="item-title">Title:</label>
+                    <input type="text" id="item-title" name="item-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="item-type">Item Type:</label>
+                    <select id="item-type" name="item-type">
+                        <option value="book">Book</option>
+                        <option value="journal">Journal</option>
+                        <option value="movie">Movie</option>
+                    </select>
+                </div>
+                <button type="button" onclick="displayItemDetails()">Show Details</button>
+            </form>
+            <div id="item-details-box" style="display:none;">
+                <div id="details-output"></div>
+            </div>
+        </section>
+        <section id="login-form" style="display:none;">
+            <h2>Librarian Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Library Management System</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function displayItemDetails() {
+            var title = document.getElementById('item-title').value;
+            var itemType = document.getElementById('item-type').value;
+            var detailsOutput = document.getElementById('details-output');
+            var itemDetailsBox = document.getElementById('item-details-box');
+
+            var details = retrieveItemDetails(title, itemType);
+            if (details) {
+                var output = "<h3>Item Details</h3>";
+                if (itemType === "book") {
+                    output += "<p>Author: " + details.author + "</p>" +
+                        "<p>ISBN: " + details.ISBN + "</p>" +
+                        "<p>Genre: " + details.genre + "</p>" +
+                        "<p>Number of Pages: " + details.numPage + "</p>";
+                } else if (itemType === "journal") {
+                    output += "<p>Editor: " + details.editor + "</p>" +
+                        "<p>ISSN: " + details.ISSN + "</p>";
+                } else if (itemType === "movie") {
+                    output += "<p>Director: " + details.director + "</p>" +
+                        "<p>Duration: " + details.duration + "</p>";
+                }
+
+                detailsOutput.innerHTML = output;
+
+                itemDetailsBox.style.display = "block";
+            } else {
+                detailsOutput.innerHTML = "<p>No details found for the provided title and type.</p>";
+                itemDetailsBox.style.display = "none";
+            }
+        }
+        function retrieveItemDetails(title, itemType) {
+            if (itemType === "book") {
+                return {
+                    author: "Frank Herbert",
+                    ISBN: "978-0441172719",
+                    genre: "Science Fiction",
+                    numPage: "412"
+                };
+            } else if (itemType === "journal") {
+                return {
+                    editor: "Judith Jones",
+                    ISSN: "1234-5678"
+                };
+            } else if (itemType === "movie") {
+                return {
+                    director: "Chris Columbus",
+                    duration: "2h 32m"
+                };
+            } else {
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>
